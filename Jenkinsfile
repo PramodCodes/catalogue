@@ -42,6 +42,9 @@ pipeline{
             steps {
                 sh """
                   ls -lart
+                  zip -r catalogue.zip ./* -x ".git" -x "*.zip"
+                ls -lart
+
                 """
             }
         }
@@ -50,6 +53,8 @@ pipeline{
     post {
         always {
             echo 'This will always run irrespective of status of the pipeline'
+            // you need to delete workspace after the build because we are using the same workspace for all the builds
+            deleteDir()
         }
         failure {
             echo 'This will run only if the pipeline is failed, We use thsi for alerting the team' 
