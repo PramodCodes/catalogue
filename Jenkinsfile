@@ -18,7 +18,7 @@ pipeline{
     // this can be used across pipeline
     environment {
         packageVersion = ''
-        nexusURL = 'http://172.31.92.207:8081/repository/catalogue/'
+        nexusURL = '172.31.92.207:8081'
     }
     //build stages
     
