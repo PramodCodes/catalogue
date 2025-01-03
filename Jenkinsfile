@@ -30,19 +30,11 @@ pipeline{
                 }
             }
         }
-        stage('Clone code') {
+        stage('Install dependencies') {
             steps {
                 sh """
-                    echo 'clone code'
-                    yum install git -y
-                    git clone https://github.com/PramodCodes/catalogue.git
-                """
-            }
-        }
-        stage('Test') {
-            steps {
-                sh """
-                   echo 'test'
+                   echo 'install dependencies'
+                   npm install
                 """
             }
         }
