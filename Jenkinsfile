@@ -33,8 +33,9 @@ pipeline{
         stage('Clone code') {
             steps {
                 sh """
-                    cd 01-vpc
-                    terraform init -reconfigure
+                    echo 'clone code'
+                    yum install git -y
+                    git clone https://github.com/PramodCodes/catalogue.git
                 """
             }
         }
