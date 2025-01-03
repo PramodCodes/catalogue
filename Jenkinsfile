@@ -8,6 +8,7 @@ pipeline{
     }
     // parameters section, this section is used to define the parameters that can be used in the pipeline
     // define the environment variables canbe accesed globally ,the following are additional to existing environment variables
+    // we use ansiColor plugin to print the logs in color
     options {
         ansiColor('xterm')
         timeout(time: 1, unit: 'HOURS')
@@ -17,6 +18,7 @@ pipeline{
     // this can be used across pipeline
     environment {
         packageVersion = ''
+        nexusURL = 'http://184.72.81.117:8081/repository/catalogue/'
     }
     //build stages
     
@@ -48,7 +50,27 @@ pipeline{
                 """
             }
         }
+        stage('publish artifacts') {
+            steps {
+                    nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${nexusURL}",
+                    groupId: 'com.roboshop',
+                    version: "${packageVersion}",
+                    repository: 'catalogue',
+                    credentialsId: 'nexus-auth',
+                    artifacts: [
+                        [artifactId: 'catalogue',
+                        classifier: '',
+                        file: 'catalogue.zip',
+                        type: 'zip']
+                    ])
+            }
+            
+        }
     }
+
     // post section
     post {
         always {
