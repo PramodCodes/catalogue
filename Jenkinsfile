@@ -1,0 +1,61 @@
+// Jenkinsfile (Declarative Pipeline) 
+pipeline{
+    agent {
+        // run on the AGENT-1 node
+        node {
+            label 'AGENT-1'
+        }
+    }
+    // parameters section, this section is used to define the parameters that can be used in the pipeline
+    // define the environment variables canbe accesed globally ,the following are additional to existing environment variables
+    options {
+        ansiColor('xterm')
+        timeout(time: 1, unit: 'HOURS')
+        disableConcurrentBuilds()
+    }
+    // we need to get version from the application for this we use pipeline, for this we will use pipeline utilities plugin
+    // this can be used across pipeline
+    environment {
+        packageVersion = ''
+    }
+    //build stages
+    
+    stages {
+        stage('Get Version') {
+            steps {
+                script {
+                    def packageJSON = readJSON file: 'package.json' 
+                    packageVersion = packageJSON.version
+                    echo "application version is ${packageVersion}"
+                }
+            }
+        }
+        stage('Clone code') {
+            steps {
+                sh """
+                    cd 01-vpc
+                    terraform init -reconfigure
+                """
+            }
+        }
+        stage('Test') {
+            steps {
+                sh """
+                   echo 'test'
+                """
+            }
+        }
+    }
+    // post section
+    post {
+        always {
+            echo 'This will always run irrespective of status of the pipeline'
+        }
+        failure {
+            echo 'This will run only if the pipeline is failed, We use thsi for alerting the team' 
+        }
+        success {
+            echo 'This will run only if the pipeline is successful'
+        }
+    }
+}
