@@ -38,6 +38,13 @@ pipeline{
                 """
             }
         }
+        stage('Build') {
+            steps {
+                sh """
+                  ls -lart
+                """
+            }
+        }
     }
     // post section
     post {
