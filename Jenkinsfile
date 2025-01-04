@@ -81,7 +81,7 @@ pipeline{
                 }
             }
         }
-    }
+}
 
     // post section
     post {
@@ -97,4 +97,3 @@ pipeline{
             echo 'This will run only if the pipeline is successful'
         }
     }
-}
