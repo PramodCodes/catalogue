@@ -7,6 +7,9 @@ pipeline{
         }
     }
     // parameters section, this section is used to define the parameters that can be used in the pipeline
+    parameters {
+        booleanParam(name: 'Deploy', defaultValue: 'false', description: 'do you want to deploy the application?')
+    }
     // define the environment variables canbe accesed globally ,the following are additional to existing environment variables
     // we use ansiColor plugin to print the logs in color
     options {
@@ -85,6 +88,11 @@ pipeline{
         }
         stage('Deploy') {
             steps {
+                when {
+                    expression {
+                        params.Deploy == true
+                    }
+                }
                 script{
                     build job: 'catalogue-deploy',wait: true,
                     parameters: [
