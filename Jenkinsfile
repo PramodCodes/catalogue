@@ -71,16 +71,15 @@ pipeline{
         }
         stage('Deploy') {
             steps {
-                 script{
+                script{
                     build job: 'catalogue-deploy',wait: true,
-                  parameters: [
-                    string(name: 'version', value: "${packageVersion}"),
-                    string(name: 'environment', value: 'dev')
-                 ]
-                 }
+                    parameters: [
+                        string(name: 'version', value: "${packageVersion}"),
+                        string(name: 'environment', value: 'dev')]
                 }
             }
         }
+    }
 }
 
     // post section
