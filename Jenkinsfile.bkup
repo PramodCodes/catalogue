@@ -1,4 +1,4 @@
-// Jenkinsfile (Declarative Pipeline) 
+// Jenkinsfile (Declarative Pipeline) renaming as backup for multi pipeline
 pipeline{
     agent {
         // run on the AGENT-1 node
