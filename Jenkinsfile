@@ -9,7 +9,7 @@ def configMap = [
     component: "catalogue"
 ]
 
-if(env.BRANCH_NAME.equalsIgnoreCase('main')){
+if(!env.BRANCH_NAME.equalsIgnoreCase('main')){
     pipelineDecission.decidePipeline(configMap)
 }
 else{
