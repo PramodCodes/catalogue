@@ -9,5 +9,5 @@ def configMap = [
     component: "catalogue"
 ]
 
-env
+sh printenv
 
